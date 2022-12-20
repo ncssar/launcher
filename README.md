@@ -1,5 +1,5 @@
 # launcher
-NCSSAR application launcher for Windows desktop, to increase consistency, reliability, and user-friendliness
+## NCSSAR application launcher for Windows desktop, to increase consistency, reliability, and user-friendliness
 
 There is often confusion about 'which icon should I click' to run sartopo, or to run radiolog, or to start IAP-builder - especially when there are different users who may or may not have recent experience with the software tool in question.
 
