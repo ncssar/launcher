@@ -61,45 +61,96 @@ class MyWindow(QDialog,Ui_launcher):
 		self.parent=parent
 		self.ui=Ui_launcher()
 		self.ui.setupUi(self)
+		
+		# caltopo button was the only one for which click signal was getting sent... why?
+		# noticed that it was the only button with a .raise_() command in _ui.py... why?
+		# not sure, but, raise them all here.  This might simplify other parts of the code too...
+		self.ui.caltopoButton.raise_()
+		self.ui.radiologButton.raise_()
+		self.ui.iapbButton.raise_()
+
 		self.ui.caltopoButtonWidget.setStyleSheet('image:url(:/launcher/icons/caltopo_logo.svg);')
-		self.um=False
-		growBy=20 # per side
+		self.um1=False
+		self.um2=False
+		self.um3=False
+		growBy=10 # per side
+
 		self.cbwSmallGeom=self.ui.caltopoButtonWidget.geometry()
-		bigX=self.cbwSmallGeom.x()-growBy
-		bigY=self.cbwSmallGeom.y()-growBy
-		bigW=self.cbwSmallGeom.width()+2*growBy
-		bigH=self.cbwSmallGeom.height()+2*growBy
-		self.cbwBigGeom=QRect(bigX,bigY,bigW,bigH)
+		self.cbwBigGeom=QRect(
+			self.cbwSmallGeom.x()-growBy,
+			self.cbwSmallGeom.y()-growBy,
+			self.cbwSmallGeom.width()+2*growBy,
+			self.cbwSmallGeom.height()+2*growBy)
+		
+		self.rbwSmallGeom=self.ui.radiologButtonWidget.geometry()
+		self.rbwBigGeom=QRect(
+			self.rbwSmallGeom.x()-growBy,
+			self.rbwSmallGeom.y()-growBy,
+			self.rbwSmallGeom.width()+2*growBy,
+			self.rbwSmallGeom.height()+2*growBy)
 	
+		self.ibwSmallGeom=self.ui.iapbButtonWidget.geometry()
+		self.ibwBigGeom=QRect(
+			self.ibwSmallGeom.x()-growBy,
+			self.ibwSmallGeom.y()-growBy,
+			self.ibwSmallGeom.width()+2*growBy,
+			self.ibwSmallGeom.height()+2*growBy)
+
 	def mouseMoveEvent(self,e):
-		um1=self.ui.caltopoButton.underMouse()
-		um2=self.ui.caltopoButtonWidget.underMouse()
-		um=um1 or um2
-		if um and not self.um: # enter
+		um1a=self.ui.caltopoButton.underMouse()
+		um1b=self.ui.caltopoButtonWidget.underMouse()
+		um2a=self.ui.radiologButton.underMouse()
+		um2b=self.ui.radiologButtonWidget.underMouse()
+		um3a=self.ui.iapbButton.underMouse()
+		um3b=self.ui.iapbButtonWidget.underMouse()
+		um1=um1a or um1b
+		um2=um2a or um2b
+		um3=um3a or um3b
+		if um1 and not self.um1: # enter caltopo
 			self.ui.caltopoButtonWidget.setGeometry(self.cbwBigGeom) # works
 			# animation=QPropertyAnimation(self.ui.caltopoButtonWidget,b'geometry')
 			# animation.setDuration(1000)
 			# animation.setStartValue(self.cbwSmallGeom)
 			# animation.setEndValue(self.cbwBigGeom)
 			# animation.start()
-			rprint('entering: cbw pos='+str(self.ui.caltopoButtonWidget.pos()))
-			self.um=um
-		elif self.um and not um: # leave
+			# rprint('entering: cbw pos='+str(self.ui.caltopoButtonWidget.pos()))
+			self.um1=um1
+		elif self.um1 and not um1: # leave caltopo
 			self.ui.caltopoButtonWidget.setGeometry(self.cbwSmallGeom)
-			rprint(' leaving')
-			self.um=um
+			# rprint(' leaving')
+			self.um1=um1
+		if um2 and not self.um2: # enter radiolog
+			self.ui.radiologButtonWidget.setGeometry(self.rbwBigGeom)
+			self.um2=um2
+		elif self.um2 and not um2: # leave radiolog
+			self.ui.radiologButtonWidget.setGeometry(self.rbwSmallGeom)
+			self.um2=um2
+		if um3 and not self.um3: # enter radiolog
+			self.ui.iapbButtonWidget.setGeometry(self.ibwBigGeom)
+			self.um3=um3
+		elif self.um3 and not um3: # leave radiolog
+			self.ui.iapbButtonWidget.setGeometry(self.ibwSmallGeom)
+			self.um3=um3
 
+	def caltopoClicked(self):
+		rprint('caltopo clicked')
 
-class AnimatedHoverButton(QPushButton):
-	# clicked=pyqtSignal()
-	def __init__(self,parent,*args,**kwargs):
-		self.parent=parent
-		QPushButton.__init__(self,parent)
-		self.w=self.size().width()
-		self.h=self.size().height()
-		rprint('w='+str(self.w)+' h='+str(self.h))
-		self.inner=False
-		# self.pressed=False
+	def radiologClicked(self):
+		rprint('radiolog clicked')
+		
+	def iapbClicked(self):
+		rprint('IAP builder clicked')
+
+# class AnimatedHoverButton(QPushButton):
+# 	# clicked=pyqtSignal()
+# 	def __init__(self,parent,*args,**kwargs):
+# 		self.parent=parent
+# 		QPushButton.__init__(self,parent)
+# 		self.w=self.size().width()
+# 		self.h=self.size().height()
+# 		rprint('w='+str(self.w)+' h='+str(self.h))
+# 		self.inner=False
+# 		# self.pressed=False
 
 	# def enterEvent(self,e):
 	# 	rprint('in')

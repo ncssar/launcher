@@ -16,11 +16,11 @@
   <property name="windowTitle">
    <string>NCSSAR Application Launcher</string>
   </property>
-  <widget class="AnimatedHoverButton" name="caltopoButton">
+  <widget class="QPushButton" name="caltopoButton">
    <property name="geometry">
     <rect>
      <x>30</x>
-     <y>10</y>
+     <y>20</y>
      <width>180</width>
      <height>180</height>
     </rect>
@@ -49,70 +49,58 @@
      <height>180</height>
     </size>
    </property>
-   <property name="font">
-    <font>
-     <family>Segoe UI</family>
-     <pointsize>24</pointsize>
-     <weight>75</weight>
-     <bold>true</bold>
-    </font>
-   </property>
    <property name="mouseTracking">
     <bool>true</bool>
    </property>
    <property name="text">
     <string/>
    </property>
-   <property name="iconSize">
-    <size>
-     <width>20</width>
-     <height>20</height>
-    </size>
+   <property name="flat">
+    <bool>true</bool>
+   </property>
+  </widget>
+  <widget class="QPushButton" name="radiologButton">
+   <property name="geometry">
+    <rect>
+     <x>30</x>
+     <y>210</y>
+     <width>180</width>
+     <height>180</height>
+    </rect>
+   </property>
+   <property name="sizePolicy">
+    <sizepolicy hsizetype="Fixed" vsizetype="Fixed">
+     <horstretch>0</horstretch>
+     <verstretch>0</verstretch>
+    </sizepolicy>
+   </property>
+   <property name="mouseTracking">
+    <bool>true</bool>
    </property>
    <property name="flat">
     <bool>true</bool>
    </property>
   </widget>
-  <widget class="QPushButton" name="caltopoButton_2">
+  <widget class="QPushButton" name="iapbButton">
    <property name="geometry">
     <rect>
      <x>30</x>
-     <y>210</y>
-     <width>181</width>
-     <height>171</height>
+     <y>400</y>
+     <width>180</width>
+     <height>180</height>
     </rect>
    </property>
-   <property name="font">
-    <font>
-     <family>Segoe UI</family>
-     <pointsize>24</pointsize>
-     <weight>75</weight>
-     <bold>true</bold>
-    </font>
+   <property name="sizePolicy">
+    <sizepolicy hsizetype="Fixed" vsizetype="Fixed">
+     <horstretch>0</horstretch>
+     <verstretch>0</verstretch>
+    </sizepolicy>
    </property>
-   <property name="text">
-    <string>RadioLog</string>
+   <property name="mouseTracking">
+    <bool>true</bool>
    </property>
-  </widget>
-  <widget class="QPushButton" name="caltopoButton_3">
-   <property name="geometry">
-    <rect>
-     <x>30</x>
-     <y>390</y>
-     <width>181</width>
-     <height>171</height>
-    </rect>
-   </property>
-   <property name="font">
-    <font>
-     <family>Segoe UI</family>
-     <pointsize>24</pointsize>
-     <weight>75</weight>
-     <bold>true</bold>
-    </font>
-   </property>
-   <property name="text">
-    <string>IAP Builder</string>
+   <property name="flat">
+    <bool>true</bool>
    </property>
   </widget>
   <widget class="QTextEdit" name="textEdit">
@@ -171,17 +159,137 @@ p, li { white-space: pre-wrap; }
    <property name="styleSheet">
     <string notr="true">image: url(:/launcher/icons/caltopo_logo.svg);</string>
    </property>
+   <zorder>caltopoButton</zorder>
+   <zorder>caltopoButton</zorder>
+  </widget>
+  <widget class="QWidget" name="radiologButtonWidget" native="true">
+   <property name="geometry">
+    <rect>
+     <x>30</x>
+     <y>210</y>
+     <width>180</width>
+     <height>180</height>
+    </rect>
+   </property>
+   <property name="sizePolicy">
+    <sizepolicy hsizetype="Fixed" vsizetype="Fixed">
+     <horstretch>0</horstretch>
+     <verstretch>0</verstretch>
+    </sizepolicy>
+   </property>
+   <property name="minimumSize">
+    <size>
+     <width>150</width>
+     <height>150</height>
+    </size>
+   </property>
+   <property name="mouseTracking">
+    <bool>true</bool>
+   </property>
+   <property name="focusPolicy">
+    <enum>Qt::StrongFocus</enum>
+   </property>
+   <property name="autoFillBackground">
+    <bool>false</bool>
+   </property>
+   <property name="styleSheet">
+    <string notr="true">image: url(:/launcher/icons/caltopo_logo.svg);</string>
+   </property>
+  </widget>
+  <widget class="QWidget" name="iapbButtonWidget" native="true">
+   <property name="enabled">
+    <bool>true</bool>
+   </property>
+   <property name="geometry">
+    <rect>
+     <x>30</x>
+     <y>400</y>
+     <width>180</width>
+     <height>180</height>
+    </rect>
+   </property>
+   <property name="sizePolicy">
+    <sizepolicy hsizetype="Fixed" vsizetype="Fixed">
+     <horstretch>0</horstretch>
+     <verstretch>0</verstretch>
+    </sizepolicy>
+   </property>
+   <property name="minimumSize">
+    <size>
+     <width>150</width>
+     <height>150</height>
+    </size>
+   </property>
+   <property name="mouseTracking">
+    <bool>true</bool>
+   </property>
+   <property name="focusPolicy">
+    <enum>Qt::StrongFocus</enum>
+   </property>
+   <property name="autoFillBackground">
+    <bool>false</bool>
+   </property>
+   <property name="styleSheet">
+    <string notr="true">image: url(:/launcher/icons/caltopo_logo.svg);</string>
+   </property>
   </widget>
  </widget>
- <customwidgets>
-  <customwidget>
-   <class>AnimatedHoverButton</class>
-   <extends>QPushButton</extends>
-   <header>launcher.h</header>
-  </customwidget>
- </customwidgets>
  <resources>
   <include location="../launcher.qrc"/>
  </resources>
- <connections/>
+ <connections>
+  <connection>
+   <sender>caltopoButton</sender>
+   <signal>clicked()</signal>
+   <receiver>launcher</receiver>
+   <slot>caltopoClicked()</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>177</x>
+     <y>28</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>232</x>
+     <y>40</y>
+    </hint>
+   </hints>
+  </connection>
+  <connection>
+   <sender>radiologButton</sender>
+   <signal>clicked()</signal>
+   <receiver>launcher</receiver>
+   <slot>radiologClicked()</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>119</x>
+     <y>299</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>388</x>
+     <y>314</y>
+    </hint>
+   </hints>
+  </connection>
+  <connection>
+   <sender>iapbButton</sender>
+   <signal>clicked()</signal>
+   <receiver>launcher</receiver>
+   <slot>iapbClicked()</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>119</x>
+     <y>489</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>388</x>
+     <y>314</y>
+    </hint>
+   </hints>
+  </connection>
+ </connections>
+ <slots>
+  <slot>caltopoClicked()</slot>
+  <slot>radiologClicked()</slot>
+  <slot>iapbClicked()</slot>
+ </slots>
 </ui>
