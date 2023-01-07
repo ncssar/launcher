@@ -1,0 +1,5 @@
+<RCC>
+  <qresource prefix="launcher">
+    <file>icons/caltopo_logo.svg</file>
+  </qresource>
+</RCC>
