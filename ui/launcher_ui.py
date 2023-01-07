@@ -54,7 +54,7 @@ class Ui_launcher(object):
         self.iapbButton.setFlat(True)
         self.iapbButton.setObjectName("iapbButton")
         self.textEdit = QtWidgets.QTextEdit(launcher)
-        self.textEdit.setGeometry(QtCore.QRect(240, 10, 521, 391))
+        self.textEdit.setGeometry(QtCore.QRect(240, 210, 521, 391))
         self.textEdit.setObjectName("textEdit")
         self.caltopoButtonWidget = QtWidgets.QWidget(launcher)
         self.caltopoButtonWidget.setGeometry(QtCore.QRect(30, 20, 180, 180))
@@ -101,6 +101,19 @@ class Ui_launcher(object):
         self.iapbButtonWidget.setAutoFillBackground(False)
         self.iapbButtonWidget.setStyleSheet("image: url(:/launcher/icons/IAPBuilder.svg);")
         self.iapbButtonWidget.setObjectName("iapbButtonWidget")
+        self.sliderWidget = QtWidgets.QWidget(launcher)
+        self.sliderWidget.setGeometry(QtCore.QRect(130, 39, 10, 141))
+        self.sliderWidget.setStyleSheet("border: 5px outset gray;\n"
+"border-left:0px;")
+        self.sliderWidget.setObjectName("sliderWidget")
+        self.textEdit.raise_()
+        self.sliderWidget.raise_()
+        self.caltopoButton.raise_()
+        self.radiologButton.raise_()
+        self.iapbButton.raise_()
+        self.caltopoButtonWidget.raise_()
+        self.radiologButtonWidget.raise_()
+        self.iapbButtonWidget.raise_()
 
         self.retranslateUi(launcher)
         self.caltopoButton.clicked.connect(launcher.caltopoClicked) # type: ignore

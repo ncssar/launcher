@@ -65,6 +65,7 @@ class MyWindow(QDialog,Ui_launcher):
 		self.ui.caltopoButtonWidget.setGraphicsEffect(QGraphicsOpacityEffect())
 		self.ui.radiologButtonWidget.setGraphicsEffect(QGraphicsOpacityEffect())
 		self.ui.iapbButtonWidget.setGraphicsEffect(QGraphicsOpacityEffect())
+		self.ui.sliderWidget.setGraphicsEffect(QGraphicsOpacityEffect())
 
 		with open('launcher.html','r') as file:
 			self.launcherHTML=file.read()
@@ -134,32 +135,64 @@ class MyWindow(QDialog,Ui_launcher):
 		self.ui.radiologButtonWidget.graphicsEffect().setOpacity(self.opacityList[int(um2 or umNone)])
 		self.ui.iapbButtonWidget.graphicsEffect().setOpacity(self.opacityList[int(um3 or umNone)])
 		if um1 and not self.um1: # enter caltopo
-			self.ui.caltopoButtonWidget.setGeometry(self.cbwBigGeom) # works
-			# animation=QPropertyAnimation(self.ui.caltopoButtonWidget,b'geometry')
-			# animation.setDuration(1000)
-			# animation.setStartValue(self.cbwSmallGeom)
-			# animation.setEndValue(self.cbwBigGeom)
-			# animation.start()
+			# self.ui.caltopoButtonWidget.setGeometry(self.cbwBigGeom) # works
 			# rprint('entering: cbw pos='+str(self.ui.caltopoButtonWidget.pos()))
+			# animation objects must be object attributes so that they persist after this function is done
+			self.caltopoAnimation=QPropertyAnimation(self.ui.caltopoButtonWidget,b'geometry')
+			self.caltopoAnimation.setEndValue(self.cbwBigGeom)
+			self.caltopoAnimation.setDuration(100)
+			self.caltopoAnimation.start()
+			self.sliderOpacityAnimation=QPropertyAnimation(self.ui.sliderWidget.graphicsEffect(),b'opacity')
+			self.sliderOpacityAnimation.setEndValue(1)
+			self.sliderOpacityAnimation.start()
+			self.sliderAnimation=QPropertyAnimation(self.ui.sliderWidget,b'size')
+			self.sliderAnimation.setEndValue(QSize(600,140))
+			self.sliderAnimation.start()
 			self.ui.textEdit.setHtml(self.caltopoHTML)
 			self.um1=um1
 		elif self.um1 and not um1: # leave caltopo
-			self.ui.caltopoButtonWidget.setGeometry(self.cbwSmallGeom)
+			# self.ui.caltopoButtonWidget.setGeometry(self.cbwSmallGeom)
+			self.caltopoAnimation=QPropertyAnimation(self.ui.caltopoButtonWidget,b'geometry')
+			self.caltopoAnimation.setEndValue(self.cbwSmallGeom)
+			self.caltopoAnimation.setDuration(100)
+			self.caltopoAnimation.start()
+			self.sliderOpacityAnimation=QPropertyAnimation(self.ui.sliderWidget.graphicsEffect(),b'opacity')
+			self.sliderOpacityAnimation.setEndValue(0)
+			self.sliderOpacityAnimation.start()
+			self.sliderAnimation=QPropertyAnimation(self.ui.sliderWidget,b'size')
+			self.sliderAnimation.setEndValue(QSize(20,140))
+			self.sliderAnimation.start()
 			# rprint(' leaving')
 			self.um1=um1
 		if um2 and not self.um2: # enter radiolog
-			self.ui.radiologButtonWidget.setGeometry(self.rbwBigGeom)
+			# self.ui.radiologButtonWidget.setGeometry(self.rbwBigGeom)
+			self.radiologAnimation=QPropertyAnimation(self.ui.radiologButtonWidget,b'geometry')
+			self.radiologAnimation.setEndValue(self.rbwBigGeom)
+			self.radiologAnimation.setDuration(100)
+			self.radiologAnimation.start()
 			self.ui.textEdit.setHtml(self.radiologHTML)
 			self.um2=um2
 		elif self.um2 and not um2: # leave radiolog
-			self.ui.radiologButtonWidget.setGeometry(self.rbwSmallGeom)
+			# self.ui.radiologButtonWidget.setGeometry(self.rbwSmallGeom)
+			self.radiologAnimation=QPropertyAnimation(self.ui.radiologButtonWidget,b'geometry')
+			self.radiologAnimation.setEndValue(self.rbwSmallGeom)
+			self.radiologAnimation.setDuration(100)
+			self.radiologAnimation.start()
 			self.um2=um2
 		if um3 and not self.um3: # enter IAP builder
-			self.ui.iapbButtonWidget.setGeometry(self.ibwBigGeom)
+			# self.ui.iapbButtonWidget.setGeometry(self.ibwBigGeom)
+			self.iapbAnimation=QPropertyAnimation(self.ui.iapbButtonWidget,b'geometry')
+			self.iapbAnimation.setEndValue(self.ibwBigGeom)
+			self.iapbAnimation.setDuration(100)
+			self.iapbAnimation.start()
 			self.ui.textEdit.setHtml(self.iapbHTML)
 			self.um3=um3
 		elif self.um3 and not um3: # leave IAP builder
-			self.ui.iapbButtonWidget.setGeometry(self.ibwSmallGeom)
+			# self.ui.iapbButtonWidget.setGeometry(self.ibwSmallGeom)
+			self.iapbAnimation=QPropertyAnimation(self.ui.iapbButtonWidget,b'geometry')
+			self.iapbAnimation.setEndValue(self.ibwSmallGeom)
+			self.iapbAnimation.setDuration(100)
+			self.iapbAnimation.start()
 			self.um3=um3
 		if umNone:
 			self.ui.textEdit.setHtml(self.launcherHTML)
