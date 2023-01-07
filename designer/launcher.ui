@@ -106,10 +106,10 @@
   <widget class="QTextEdit" name="textEdit">
    <property name="geometry">
     <rect>
-     <x>260</x>
+     <x>240</x>
      <y>10</y>
-     <width>501</width>
-     <height>211</height>
+     <width>521</width>
+     <height>391</height>
     </rect>
    </property>
    <property name="html">
@@ -193,7 +193,7 @@ p, li { white-space: pre-wrap; }
     <bool>false</bool>
    </property>
    <property name="styleSheet">
-    <string notr="true">image: url(:/launcher/icons/caltopo_logo.svg);</string>
+    <string notr="true">image: url(:/launcher/icons/radiolog.svg);</string>
    </property>
   </widget>
   <widget class="QWidget" name="iapbButtonWidget" native="true">
@@ -230,7 +230,7 @@ p, li { white-space: pre-wrap; }
     <bool>false</bool>
    </property>
    <property name="styleSheet">
-    <string notr="true">image: url(:/launcher/icons/caltopo_logo.svg);</string>
+    <string notr="true">image: url(:/launcher/icons/IAPBuilder.svg);</string>
    </property>
   </widget>
  </widget>

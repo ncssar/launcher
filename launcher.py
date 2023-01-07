@@ -66,6 +66,18 @@ class MyWindow(QDialog,Ui_launcher):
 		self.ui.radiologButtonWidget.setGraphicsEffect(QGraphicsOpacityEffect())
 		self.ui.iapbButtonWidget.setGraphicsEffect(QGraphicsOpacityEffect())
 
+		with open('launcher.html','r') as file:
+			self.launcherHTML=file.read()
+
+		with open('caltopo.html','r') as file:
+			self.caltopoHTML=file.read()
+
+		with open('radiolog.html','r') as file:
+			self.radiologHTML=file.read()
+
+		with open('iapb.html','r') as file:
+			self.iapbHTML=file.read()
+
 		# caltopo button was the only one for which click signal was getting sent... why?
 		# noticed that it was the only button with a .raise_() command in _ui.py... why?
 		# not sure, but, raise them all here.  This might simplify other parts of the code too...
@@ -129,6 +141,7 @@ class MyWindow(QDialog,Ui_launcher):
 			# animation.setEndValue(self.cbwBigGeom)
 			# animation.start()
 			# rprint('entering: cbw pos='+str(self.ui.caltopoButtonWidget.pos()))
+			self.ui.textEdit.setHtml(self.caltopoHTML)
 			self.um1=um1
 		elif self.um1 and not um1: # leave caltopo
 			self.ui.caltopoButtonWidget.setGeometry(self.cbwSmallGeom)
@@ -136,16 +149,20 @@ class MyWindow(QDialog,Ui_launcher):
 			self.um1=um1
 		if um2 and not self.um2: # enter radiolog
 			self.ui.radiologButtonWidget.setGeometry(self.rbwBigGeom)
+			self.ui.textEdit.setHtml(self.radiologHTML)
 			self.um2=um2
 		elif self.um2 and not um2: # leave radiolog
 			self.ui.radiologButtonWidget.setGeometry(self.rbwSmallGeom)
 			self.um2=um2
 		if um3 and not self.um3: # enter IAP builder
 			self.ui.iapbButtonWidget.setGeometry(self.ibwBigGeom)
+			self.ui.textEdit.setHtml(self.iapbHTML)
 			self.um3=um3
 		elif self.um3 and not um3: # leave IAP builder
 			self.ui.iapbButtonWidget.setGeometry(self.ibwSmallGeom)
 			self.um3=um3
+		if umNone:
+			self.ui.textEdit.setHtml(self.launcherHTML)
 
  	# since a quick move of the mouse could exit the window without mouseMoveEvent being called
 	#  on a location that would reset icon opacities and sizes, do it here manually

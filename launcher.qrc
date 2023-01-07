@@ -1,5 +1,7 @@
 <RCC>
   <qresource prefix="launcher">
+    <file>icons/IAPBuilder.svg</file>
+    <file>icons/radiolog.svg</file>
     <file>icons/caltopo_logo.svg</file>
   </qresource>
 </RCC>
