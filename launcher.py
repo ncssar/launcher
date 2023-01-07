@@ -61,7 +61,11 @@ class MyWindow(QDialog,Ui_launcher):
 		self.parent=parent
 		self.ui=Ui_launcher()
 		self.ui.setupUi(self)
-		
+
+		self.ui.caltopoButtonWidget.setGraphicsEffect(QGraphicsOpacityEffect())
+		self.ui.radiologButtonWidget.setGraphicsEffect(QGraphicsOpacityEffect())
+		self.ui.iapbButtonWidget.setGraphicsEffect(QGraphicsOpacityEffect())
+
 		# caltopo button was the only one for which click signal was getting sent... why?
 		# noticed that it was the only button with a .raise_() command in _ui.py... why?
 		# not sure, but, raise them all here.  This might simplify other parts of the code too...
@@ -73,6 +77,9 @@ class MyWindow(QDialog,Ui_launcher):
 		self.um1=False
 		self.um2=False
 		self.um3=False
+
+		self.opacityList=[0.7,1]
+
 		growBy=10 # per side
 
 		self.cbwSmallGeom=self.ui.caltopoButtonWidget.geometry()
@@ -96,6 +103,8 @@ class MyWindow(QDialog,Ui_launcher):
 			self.ibwSmallGeom.width()+2*growBy,
 			self.ibwSmallGeom.height()+2*growBy)
 
+		self.mouseMoveEvent(None) # initially set all opacities to 1
+
 	def mouseMoveEvent(self,e):
 		um1a=self.ui.caltopoButton.underMouse()
 		um1b=self.ui.caltopoButtonWidget.underMouse()
@@ -103,9 +112,15 @@ class MyWindow(QDialog,Ui_launcher):
 		um2b=self.ui.radiologButtonWidget.underMouse()
 		um3a=self.ui.iapbButton.underMouse()
 		um3b=self.ui.iapbButtonWidget.underMouse()
+		# even though the button is raised, button.underMouse becomes false when moving inwards
+		# rprint(str(int(um1a))+' '+str(int(um1b)))
 		um1=um1a or um1b
 		um2=um2a or um2b
 		um3=um3a or um3b
+		umNone=not(um1 or um2 or um3)
+		self.ui.caltopoButtonWidget.graphicsEffect().setOpacity(self.opacityList[int(um1 or umNone)])
+		self.ui.radiologButtonWidget.graphicsEffect().setOpacity(self.opacityList[int(um2 or umNone)])
+		self.ui.iapbButtonWidget.graphicsEffect().setOpacity(self.opacityList[int(um3 or umNone)])
 		if um1 and not self.um1: # enter caltopo
 			self.ui.caltopoButtonWidget.setGeometry(self.cbwBigGeom) # works
 			# animation=QPropertyAnimation(self.ui.caltopoButtonWidget,b'geometry')
@@ -125,12 +140,17 @@ class MyWindow(QDialog,Ui_launcher):
 		elif self.um2 and not um2: # leave radiolog
 			self.ui.radiologButtonWidget.setGeometry(self.rbwSmallGeom)
 			self.um2=um2
-		if um3 and not self.um3: # enter radiolog
+		if um3 and not self.um3: # enter IAP builder
 			self.ui.iapbButtonWidget.setGeometry(self.ibwBigGeom)
 			self.um3=um3
-		elif self.um3 and not um3: # leave radiolog
+		elif self.um3 and not um3: # leave IAP builder
 			self.ui.iapbButtonWidget.setGeometry(self.ibwSmallGeom)
 			self.um3=um3
+
+ 	# since a quick move of the mouse could exit the window without mouseMoveEvent being called
+	#  on a location that would reset icon opacities and sizes, do it here manually
+	def leaveEvent(self,e):
+		self.mouseMoveEvent(None)
 
 	def caltopoClicked(self):
 		rprint('caltopo clicked')
