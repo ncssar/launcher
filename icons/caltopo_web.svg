@@ -1,0 +1,78 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<svg
+   xmlns:dc="http://purl.org/dc/elements/1.1/"
+   xmlns:cc="http://creativecommons.org/ns#"
+   xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#"
+   xmlns:svg="http://www.w3.org/2000/svg"
+   xmlns="http://www.w3.org/2000/svg"
+   xmlns:sodipodi="http://sodipodi.sourceforge.net/DTD/sodipodi-0.dtd"
+   xmlns:inkscape="http://www.inkscape.org/namespaces/inkscape"
+   id="6cec28dd-062f-401b-a609-3c59bce0a765"
+   data-name="Layer 1"
+   width="96.5"
+   height="96.48"
+   viewBox="0 0 96.5 96.48"
+   version="1.1"
+   sodipodi:docname="caltopo_web.svg"
+   inkscape:version="0.92.0 r15299">
+  <metadata
+     id="metadata4532">
+    <rdf:RDF>
+      <cc:Work
+         rdf:about="">
+        <dc:format>image/svg+xml</dc:format>
+        <dc:type
+           rdf:resource="http://purl.org/dc/dcmitype/StillImage" />
+        <dc:title>CT ST Logo icon</dc:title>
+      </cc:Work>
+    </rdf:RDF>
+  </metadata>
+  <defs
+     id="defs4530" />
+  <sodipodi:namedview
+     pagecolor="#ffffff"
+     bordercolor="#666666"
+     borderopacity="1"
+     objecttolerance="10"
+     gridtolerance="10"
+     guidetolerance="10"
+     inkscape:pageopacity="0"
+     inkscape:pageshadow="2"
+     inkscape:window-width="1920"
+     inkscape:window-height="1051"
+     id="namedview4528"
+     showgrid="false"
+     inkscape:zoom="2.4461027"
+     inkscape:cx="-71.532377"
+     inkscape:cy="48.240001"
+     inkscape:window-x="-9"
+     inkscape:window-y="-9"
+     inkscape:window-maximized="1"
+     inkscape:current-layer="6cec28dd-062f-401b-a609-3c59bce0a765"
+     inkscape:snap-text-baseline="false" />
+  <title
+     id="title4519">CT ST Logo icon</title>
+  <path
+     d="M50.48,88.13c-.75,0-1.5.06-2.24.06A39.91,39.91,0,0,1,10.85,62.32L2.25,61.1,1,55l7.34-4.42c-.05-.79-.07-1.57-.07-2.35A39.92,39.92,0,0,1,34,10.88l1.18-8.61L41.3,1l4.45,7.32c.84-.05,1.67-.08,2.49-.08A39.9,39.9,0,0,1,85.66,34.18l8.6,1.23,1.24,6.11-7.35,4.42c0,.76.07,1.52.07,2.28a39.89,39.89,0,0,1-26,37.44L61,94.25l-6.12,1.23Z"
+     fill="#fff"
+     id="path4521" />
+  <path
+     d="M46.05,24.08C42.48,32,33.92,57.81,30.13,67.14L32,68.62l41.88-25.2-.39-1.79L66,40.76A29.49,29.49,0,0,1,58.25,31l-1.09-.48-3.61,1.08A23.41,23.41,0,0,1,47.77,24Z"
+     fill="#cc5e31"
+     id="path4523" />
+  <path
+     d="M92.42,40.17,92,37.86l-8.33-1.19A37.11,37.11,0,0,0,44.28,11.21L40,4.09l-2.31.48L36.5,12.9A37.18,37.18,0,0,0,11.22,52l-7.14,4.3.47,2.31,8.34,1.18A37.28,37.28,0,0,0,48.24,85.44,35.09,35.09,0,0,0,52,85.25l4.28,7.15,2.31-.46,1.2-8.33A37.28,37.28,0,0,0,85.47,48.22c0-1.27-.07-2.53-.19-3.77Zm-44.18,41a33,33,0,1,1,33-33A33,33,0,0,1,48.24,81.19Z"
+     fill="#cc5e31"
+     id="path4525" />
+  <text
+     xml:space="preserve"
+     style="font-style:normal;font-weight:normal;font-size:40px;line-height:25px;font-family:sans-serif;letter-spacing:0px;word-spacing:0px;fill:#000000;fill-opacity:1;stroke:none"
+     x="15.126102"
+     y="90.347801"
+     id="text6271"><tspan
+       sodipodi:role="line"
+       id="tspan6269"
+       x="15.126102"
+       y="90.347801"
+       style="font-style:normal;font-variant:normal;font-weight:bold;font-stretch:normal;font-size:26.66666603px;font-family:sans-serif;-inkscape-font-specification:'sans-serif, Bold';font-variant-ligatures:normal;font-variant-caps:normal;font-variant-numeric:normal;font-feature-settings:normal;text-align:start;writing-mode:lr-tb;text-anchor:start">WEB</tspan></text>
+</svg>

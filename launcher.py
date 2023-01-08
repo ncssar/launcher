@@ -65,7 +65,7 @@ class MyWindow(QDialog,Ui_launcher):
 		self.ui.caltopoButtonWidget.setGraphicsEffect(QGraphicsOpacityEffect())
 		self.ui.radiologButtonWidget.setGraphicsEffect(QGraphicsOpacityEffect())
 		self.ui.iapbButtonWidget.setGraphicsEffect(QGraphicsOpacityEffect())
-		self.ui.sliderWidget.setGraphicsEffect(QGraphicsOpacityEffect())
+		# self.ui.sliderWidget.setGraphicsEffect(QGraphicsOpacityEffect())
 
 		with open('launcher.html','r') as file:
 			self.launcherHTML=file.read()
@@ -125,9 +125,14 @@ class MyWindow(QDialog,Ui_launcher):
 		um2b=self.ui.radiologButtonWidget.underMouse()
 		um3a=self.ui.iapbButton.underMouse()
 		um3b=self.ui.iapbButtonWidget.underMouse()
+		umTray=self.ui.caltopoTrayWidget.underMouse()
+		umT1=self.ui.caltopoWebButton.underMouse()
+		umT2=self.ui.caltopoLANButton.underMouse()
+		umT3=self.ui.caltopoLocalhostButton.underMouse()
+		umT=umTray or umT1 or umT2 or umT3
 		# even though the button is raised, button.underMouse becomes false when moving inwards
 		# rprint(str(int(um1a))+' '+str(int(um1b)))
-		um1=um1a or um1b
+		um1=um1a or um1b or umT
 		um2=um2a or um2b
 		um3=um3a or um3b
 		umNone=not(um1 or um2 or um3)
@@ -142,12 +147,15 @@ class MyWindow(QDialog,Ui_launcher):
 			self.caltopoAnimation.setEndValue(self.cbwBigGeom)
 			self.caltopoAnimation.setDuration(100)
 			self.caltopoAnimation.start()
-			self.sliderOpacityAnimation=QPropertyAnimation(self.ui.sliderWidget.graphicsEffect(),b'opacity')
-			self.sliderOpacityAnimation.setEndValue(1)
-			self.sliderOpacityAnimation.start()
-			self.sliderAnimation=QPropertyAnimation(self.ui.sliderWidget,b'size')
-			self.sliderAnimation.setEndValue(QSize(600,140))
-			self.sliderAnimation.start()
+			# self.sliderOpacityAnimation=QPropertyAnimation(self.ui.sliderWidget.graphicsEffect(),b'opacity')
+			# self.sliderOpacityAnimation.setEndValue(1)
+			# self.sliderOpacityAnimation.start()
+			# self.sliderAnimation=QPropertyAnimation(self.ui.sliderWidget,b'size')
+			# self.sliderAnimation.setEndValue(QSize(600,140))
+			# self.sliderAnimation.start()
+			self.trayAnimation=QPropertyAnimation(self.ui.caltopoTrayWidget,b'pos')
+			self.trayAnimation.setEndValue(QPoint(130,39))
+			self.trayAnimation.start()
 			self.ui.textEdit.setHtml(self.caltopoHTML)
 			self.um1=um1
 		elif self.um1 and not um1: # leave caltopo
@@ -156,12 +164,15 @@ class MyWindow(QDialog,Ui_launcher):
 			self.caltopoAnimation.setEndValue(self.cbwSmallGeom)
 			self.caltopoAnimation.setDuration(100)
 			self.caltopoAnimation.start()
-			self.sliderOpacityAnimation=QPropertyAnimation(self.ui.sliderWidget.graphicsEffect(),b'opacity')
-			self.sliderOpacityAnimation.setEndValue(0)
-			self.sliderOpacityAnimation.start()
-			self.sliderAnimation=QPropertyAnimation(self.ui.sliderWidget,b'size')
-			self.sliderAnimation.setEndValue(QSize(20,140))
-			self.sliderAnimation.start()
+			# self.sliderOpacityAnimation=QPropertyAnimation(self.ui.sliderWidget.graphicsEffect(),b'opacity')
+			# self.sliderOpacityAnimation.setEndValue(0)
+			# self.sliderOpacityAnimation.start()
+			# self.sliderAnimation=QPropertyAnimation(self.ui.sliderWidget,b'size')
+			# self.sliderAnimation.setEndValue(QSize(20,140))
+			# self.sliderAnimation.start()
+			self.trayAnimation=QPropertyAnimation(self.ui.caltopoTrayWidget,b'pos')
+			self.trayAnimation.setEndValue(QPoint(-470,39))
+			self.trayAnimation.start()
 			# rprint(' leaving')
 			self.um1=um1
 		if um2 and not self.um2: # enter radiolog
@@ -210,6 +221,15 @@ class MyWindow(QDialog,Ui_launcher):
 		
 	def iapbClicked(self):
 		rprint('IAP builder clicked')
+
+	def caltopoWebClicked(self):
+		rprint('caltopo web clicked')
+		
+	def caltopoLANClicked(self):
+		rprint('caltopo LAN clicked')
+
+	def caltopoLocalhostClicked(self):
+		rprint('caltopo localhost clicked')
 
 # class AnimatedHoverButton(QPushButton):
 # 	# clicked=pyqtSignal()

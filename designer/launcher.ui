@@ -171,8 +171,6 @@ p, li { white-space: pre-wrap; }
    <property name="styleSheet">
     <string notr="true">image: url(:/launcher/icons/caltopo_logo.svg);</string>
    </property>
-   <zorder>caltopoButton</zorder>
-   <zorder>caltopoButton</zorder>
   </widget>
   <widget class="QWidget" name="radiologButtonWidget" native="true">
    <property name="geometry">
@@ -251,22 +249,124 @@ p, li { white-space: pre-wrap; }
     <string notr="true">image: url(:/launcher/icons/IAPBuilder.svg);</string>
    </property>
   </widget>
-  <widget class="QWidget" name="sliderWidget" native="true">
+  <widget class="QWidget" name="caltopoTrayWidget" native="true">
    <property name="geometry">
     <rect>
      <x>130</x>
-     <y>39</y>
-     <width>10</width>
+     <y>40</y>
+     <width>601</width>
      <height>141</height>
     </rect>
    </property>
+   <property name="mouseTracking">
+    <bool>true</bool>
+   </property>
    <property name="styleSheet">
-    <string notr="true">border: 5px outset gray;
-border-left:0px;</string>
+    <string notr="true">#caltopoTrayWidget {
+	border:3px outset green;
+}</string>
+   </property>
+   <widget class="QWidget" name="horizontalLayoutWidget">
+    <property name="geometry">
+     <rect>
+      <x>129</x>
+      <y>9</y>
+      <width>461</width>
+      <height>121</height>
+     </rect>
+    </property>
+    <layout class="QHBoxLayout" name="horizontalLayout">
+     <item>
+      <widget class="QPushButton" name="caltopoWebButton">
+       <property name="sizePolicy">
+        <sizepolicy hsizetype="Minimum" vsizetype="MinimumExpanding">
+         <horstretch>0</horstretch>
+         <verstretch>0</verstretch>
+        </sizepolicy>
+       </property>
+       <property name="cursor">
+        <cursorShape>PointingHandCursor</cursorShape>
+       </property>
+       <property name="styleSheet">
+        <string notr="true">image: url(:/launcher/icons/caltopo_web.svg);</string>
+       </property>
+       <property name="text">
+        <string/>
+       </property>
+       <property name="flat">
+        <bool>true</bool>
+       </property>
+      </widget>
+     </item>
+     <item>
+      <widget class="QPushButton" name="caltopoLANButton">
+       <property name="sizePolicy">
+        <sizepolicy hsizetype="Minimum" vsizetype="MinimumExpanding">
+         <horstretch>0</horstretch>
+         <verstretch>0</verstretch>
+        </sizepolicy>
+       </property>
+       <property name="cursor">
+        <cursorShape>PointingHandCursor</cursorShape>
+       </property>
+       <property name="mouseTracking">
+        <bool>true</bool>
+       </property>
+       <property name="styleSheet">
+        <string notr="true">image: url(:/launcher/icons/caltopo_lan.svg);</string>
+       </property>
+       <property name="text">
+        <string/>
+       </property>
+       <property name="flat">
+        <bool>true</bool>
+       </property>
+      </widget>
+     </item>
+     <item>
+      <widget class="QPushButton" name="caltopoLocalhostButton">
+       <property name="sizePolicy">
+        <sizepolicy hsizetype="Minimum" vsizetype="MinimumExpanding">
+         <horstretch>0</horstretch>
+         <verstretch>0</verstretch>
+        </sizepolicy>
+       </property>
+       <property name="cursor">
+        <cursorShape>PointingHandCursor</cursorShape>
+       </property>
+       <property name="styleSheet">
+        <string notr="true">image: url(:/launcher/icons/caltopo_local.svg);</string>
+       </property>
+       <property name="text">
+        <string/>
+       </property>
+       <property name="flat">
+        <bool>true</bool>
+       </property>
+      </widget>
+     </item>
+    </layout>
+   </widget>
+  </widget>
+  <widget class="QWidget" name="trayCoverWidget" native="true">
+   <property name="geometry">
+    <rect>
+     <x>0</x>
+     <y>29</y>
+     <width>141</width>
+     <height>161</height>
+    </rect>
+   </property>
+   <property name="autoFillBackground">
+    <bool>true</bool>
+   </property>
+   <property name="styleSheet">
+    <string notr="true">color:gray;</string>
    </property>
   </widget>
+  <zorder>caltopoTrayWidget</zorder>
+  <zorder>trayCoverWidget</zorder>
   <zorder>textEdit</zorder>
-  <zorder>sliderWidget</zorder>
   <zorder>caltopoButton</zorder>
   <zorder>radiologButton</zorder>
   <zorder>iapbButton</zorder>
@@ -326,10 +426,61 @@ border-left:0px;</string>
     </hint>
    </hints>
   </connection>
+  <connection>
+   <sender>caltopoLANButton</sender>
+   <signal>clicked()</signal>
+   <receiver>launcher</receiver>
+   <slot>caltopoLANClicked()</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>455</x>
+     <y>111</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>470</x>
+     <y>22</y>
+    </hint>
+   </hints>
+  </connection>
+  <connection>
+   <sender>caltopoWebButton</sender>
+   <signal>clicked()</signal>
+   <receiver>launcher</receiver>
+   <slot>caltopoWebClicked()</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>364</x>
+     <y>67</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>375</x>
+     <y>21</y>
+    </hint>
+   </hints>
+  </connection>
+  <connection>
+   <sender>caltopoLocalhostButton</sender>
+   <signal>clicked()</signal>
+   <receiver>launcher</receiver>
+   <slot>caltopoLocalhostClicked()</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>668</x>
+     <y>65</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>690</x>
+     <y>26</y>
+    </hint>
+   </hints>
+  </connection>
  </connections>
  <slots>
   <slot>caltopoClicked()</slot>
   <slot>radiologClicked()</slot>
   <slot>iapbClicked()</slot>
+  <slot>caltopoLANClicked()</slot>
+  <slot>caltopoWebClicked()</slot>
+  <slot>caltopoLocalhostClicked()</slot>
  </slots>
 </ui>

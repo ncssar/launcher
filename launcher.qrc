@@ -1,5 +1,8 @@
 <RCC>
   <qresource prefix="launcher">
+    <file>icons/caltopo_lan.svg</file>
+    <file>icons/caltopo_local.svg</file>
+    <file>icons/caltopo_web.svg</file>
     <file>icons/IAPBuilder.svg</file>
     <file>icons/radiolog.svg</file>
     <file>icons/caltopo_logo.svg</file>
