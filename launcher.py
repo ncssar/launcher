@@ -4,6 +4,7 @@ import glob
 import winreg
 import enum
 import subprocess
+import json
 
 from PyQt5.QtCore import *
 from PyQt5.QtGui import *
@@ -64,6 +65,10 @@ sources = [
     ],
 ]
 
+class HKEYEnum(enum.Enum):
+	HKEY_LOCAL_MACHINE=winreg.HKEY_LOCAL_MACHINE
+	HKEY_CURRENT_USER=winreg.HKEY_CURRENT_USER
+
 class ReadMode(enum.Enum):
    KEY = 1
    VALUE = 2
@@ -82,9 +87,13 @@ def read(key, mode):
 
 def readRegistery(keyType, registryKeyPath):
     registry = winreg.ConnectRegistry(None, keyType)
-    registryKey = winreg.OpenKey(registry, registryKeyPath)
+    access=winreg.KEY_READ
+    if 'WOW6432' not in registryKeyPath: # disable redirection, so that non-WOW actually opens non-WOW
+        access=winreg.KEY_READ|winreg.KEY_WOW64_64KEY
+    registryKey = winreg.OpenKey(registry, registryKeyPath,0,access)
     for subKeyName in read(registryKey, ReadMode.KEY):
-        subKey = winreg.OpenKey(registry, f"{registryKeyPath}\\{subKeyName}")
+        # rprint('subkey:'+subKeyName)
+        subKey = winreg.OpenKey(registry, f"{registryKeyPath}\\{subKeyName}",0,access)
         values = {}
         for subKeyValue in read(subKey, ReadMode.VALUE):
             values[subKeyValue[0]] = subKeyValue[1]
@@ -95,7 +104,9 @@ def readRegistery(keyType, registryKeyPath):
 #  return: list of application data from the registry: [InstalledLocation,DisplayVersion]
 def getAppData(appNameStart):
 	for source in sources:
+		# rprint('Source:'+HKEYEnum(source[0]).name+'\\'+source[1])
 		for data in readRegistery(source[0], source[1]):
+			# rprint(json.dumps(data,indent=3))
 			if 'DisplayName' in data and data['DisplayName'].startswith(appNameStart):
 				return [data.get('InstallLocation'),data.get('DisplayVersion')]
 
@@ -138,6 +149,9 @@ class MyWindow(QDialog,Ui_launcher):
 
 		self.radiologAppData=getAppData('RadioLog')
 		self.radiologHTML+='<br><h2>Installed version: '+str(self.radiologAppData[1]+'</h2>')
+
+		self.ctdAppData=getAppData('CalTopo')
+		rprint('ctd:'+str(self.ctdAppData))
 
 		self.sartopoLANURL='https://microsoft.com'
 
