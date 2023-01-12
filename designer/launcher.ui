@@ -346,6 +346,9 @@ p, li { white-space: pre-wrap; }
       </widget>
      </item>
     </layout>
+    <zorder>caltopoWebButton</zorder>
+    <zorder>caltopoLocalhostButton</zorder>
+    <zorder>caltopoLANButton</zorder>
    </widget>
   </widget>
   <widget class="QWidget" name="trayCoverWidget" native="true">

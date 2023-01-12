@@ -1,6 +1,9 @@
 import os
 import sys
 import glob
+import winreg
+import enum
+import subprocess
 
 from PyQt5.QtCore import *
 from PyQt5.QtGui import *
@@ -44,6 +47,60 @@ for qrc in glob.glob(os.path.join(qtQrcDir,'*.qrc')):
 
 from ui.launcher_ui import Ui_launcher
 
+# ADAPTED FROM https://gist.github.com/asissuthar/1470a3080c276ac0caf0ab237d91afcd
+
+sources = [
+    [
+        winreg.HKEY_LOCAL_MACHINE,
+        r"SOFTWARE\WOW6432Node\Microsoft\Windows\CurrentVersion\Uninstall",
+    ],
+    [
+        winreg.HKEY_LOCAL_MACHINE,
+        r"SOFTWARE\Microsoft\Windows\CurrentVersion\Uninstall",
+    ],
+    [
+        winreg.HKEY_CURRENT_USER,
+        r"SOFTWARE\Microsoft\Windows\CurrentVersion\Uninstall",
+    ],
+]
+
+class ReadMode(enum.Enum):
+   KEY = 1
+   VALUE = 2
+
+def read(key, mode):
+    i = 0
+    while True:
+        try:
+            if mode == ReadMode.KEY:
+                yield winreg.EnumKey(key, i)
+            elif mode == ReadMode.VALUE:
+                yield winreg.EnumValue(key, i)
+            i += 1
+        except OSError:
+            break
+
+def readRegistery(keyType, registryKeyPath):
+    registry = winreg.ConnectRegistry(None, keyType)
+    registryKey = winreg.OpenKey(registry, registryKeyPath)
+    for subKeyName in read(registryKey, ReadMode.KEY):
+        subKey = winreg.OpenKey(registry, f"{registryKeyPath}\\{subKeyName}")
+        values = {}
+        for subKeyValue in read(subKey, ReadMode.VALUE):
+            values[subKeyValue[0]] = subKeyValue[1]
+        yield values
+
+# getAppData
+#  argument: beginning of the application name to search for
+#  return: list of application data from the registry: [InstalledLocation,DisplayVersion]
+def getAppData(appNameStart):
+	for source in sources:
+		for data in readRegistery(source[0], source[1]):
+			if 'DisplayName' in data and data['DisplayName'].startswith(appNameStart):
+				return [data.get('InstallLocation'),data.get('DisplayVersion')]
+
+
+
 # Tried MANY methods to allow the image to scale up on mouse enter, and down on mouse leave;
 #  it was surprisingly tricky.  The method below uses a pushbutton widget, and a plain widget with
 #  the same geometry.  These overlapping widgets are possible if they are not inside a layout structure,
@@ -78,6 +135,11 @@ class MyWindow(QDialog,Ui_launcher):
 
 		with open('iapb.html','r') as file:
 			self.iapbHTML=file.read()
+
+		self.radiologAppData=getAppData('RadioLog')
+		self.radiologHTML+='<br><h2>Installed version: '+str(self.radiologAppData[1]+'</h2>')
+
+		self.sartopoLANURL='https://microsoft.com'
 
 		# caltopo button was the only one for which click signal was getting sent... why?
 		# noticed that it was the only button with a .raise_() command in _ui.py... why?
@@ -131,7 +193,7 @@ class MyWindow(QDialog,Ui_launcher):
 		umT3=self.ui.caltopoLocalhostButton.underMouse()
 		umT=umTray or umT1 or umT2 or umT3
 		# even though the button is raised, button.underMouse becomes false when moving inwards
-		# rprint(str(int(um1a))+' '+str(int(um1b)))
+		# rprint(str(int(um1a))+' '+str(int(um1b))+' '+str(int(umTray))+' '+str(int(umT1))+' '+str(int(umT2))+' '+str(int(umT3)))
 		um1=um1a or um1b or umT
 		um2=um2a or um2b
 		um3=um3a or um3b
@@ -207,6 +269,8 @@ class MyWindow(QDialog,Ui_launcher):
 			self.um3=um3
 		if umNone:
 			self.ui.textEdit.setHtml(self.launcherHTML)
+		if umT1:
+			rprint('umT1')
 
  	# since a quick move of the mouse could exit the window without mouseMoveEvent being called
 	#  on a location that would reset icon opacities and sizes, do it here manually
@@ -218,15 +282,29 @@ class MyWindow(QDialog,Ui_launcher):
 
 	def radiologClicked(self):
 		rprint('radiolog clicked')
+		self.ui.textEdit.append('<br><h2>Launching RadioLog...</h2>')
+		QCoreApplication.processEvents()
+		QTimer.singleShot(5000,lambda:self.ui.textEdit.setHtml(self.radiologHTML))
+		# os.system('"'+os.path.join(self.radiologAppData[0],'RadioLog.exe')+'"')
+		subprocess.Popen('"'+os.path.join(self.radiologAppData[0],'RadioLog.exe')+'"')
 		
 	def iapbClicked(self):
 		rprint('IAP builder clicked')
+		shutil.copyfile(template,dst)
 
 	def caltopoWebClicked(self):
 		rprint('caltopo web clicked')
+		self.ui.textEdit.append('<br><h2>Opening sartopo.com in a new browser tab...</h2>')
+		QCoreApplication.processEvents()
+		QTimer.singleShot(2000,lambda:self.ui.textEdit.setHtml(self.caltopoHTML))
+		os.system('start https://sartopo.com')
 		
 	def caltopoLANClicked(self):
 		rprint('caltopo LAN clicked')
+		self.ui.textEdit.append('<br><h2>Opening '+self.sartopoLANURL+' in a new browser tab...</h2>')
+		QCoreApplication.processEvents()
+		QTimer.singleShot(2000,lambda:self.ui.textEdit.setHtml(self.caltopoHTML))
+		os.system('start '+self.sartopoLANURL)
 
 	def caltopoLocalhostClicked(self):
 		rprint('caltopo localhost clicked')
