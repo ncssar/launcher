@@ -5,6 +5,8 @@ import winreg
 import enum
 import subprocess
 import json
+import shutil
+from datetime import datetime
 
 from PyQt5.QtCore import *
 from PyQt5.QtGui import *
@@ -153,6 +155,8 @@ class MyWindow(QDialog,Ui_launcher):
 		self.ctdAppData=getAppData('CalTopo')
 		rprint('ctd:'+str(self.ctdAppData))
 
+		self.iapTemplate='C:\\Users\\caver\\Downloads\\MASTER_IAP_202209.xlsx'
+		self.iapDir='C:\\Users\\caver\\Desktop'
 		self.sartopoLANURL='https://microsoft.com'
 
 		# caltopo button was the only one for which click signal was getting sent... why?
@@ -304,7 +308,18 @@ class MyWindow(QDialog,Ui_launcher):
 		
 	def iapbClicked(self):
 		rprint('IAP builder clicked')
-		shutil.copyfile(template,dst)
+		text,ok=QInputDialog.getText(self,'Create a new IAP','Incident Name:')
+		if ok:
+			self.incidentName=text
+			now=datetime.now()
+			timeStr=now.strftime('%Y%m%d_%H%M')
+			dst=os.path.join(self.iapDir,'IAP_'+text.replace(' ','')+'_'+timeStr+'.xlsx')
+			self.ui.textEdit.append('<br><h3>Copying IAP Template '+self.iapTemplate+'<br>to<br>'+dst+'...')
+			shutil.copyfile(self.iapTemplate,dst)
+			self.ui.textEdit.append('<br><h2>Opening '+dst+' in Excel...')
+			QTimer.singleShot(3000,lambda:self.ui.textEdit.setHtml(self.iapbHTML))
+			os.system('start EXCEL.EXE '+dst) # this seems to work fine - opens Excel as a separate process
+			# subprocess.Popen(['start','EXCEL.EXE',dst])
 
 	def caltopoWebClicked(self):
 		rprint('caltopo web clicked')
